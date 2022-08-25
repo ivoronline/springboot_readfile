@@ -14,12 +14,10 @@ import java.nio.file.Files;
 @Component
 public class MyRunner implements CommandLineRunner {
 
-  @Value("classpath:Test.txt")                          //file: and url:.
-  Resource resource2;
-
-  @Autowired ResourceLoader     resourceLoader;         //lazily load Resource
-
-  @Autowired ApplicationContext applicationContext;
+  //PROPERTIES
+  @Value("classpath:Test.txt") Resource           resource1;              //For file: and url:.
+  @Autowired                   ResourceLoader     resourceLoader;         //lazily load Resource
+  @Autowired                   ApplicationContext applicationContext;
 
   //=====================================================================================
   // RUN
@@ -28,12 +26,12 @@ public class MyRunner implements CommandLineRunner {
   public void run(String... args) throws Exception {
 
     //GET RESOURCE
-    Resource resource  = new ClassPathResource("Test.txt");
+    Resource resource2 = new ClassPathResource("Test.txt");
     Resource resource3 = resourceLoader    .getResource("classpath:Test.txt");
     Resource resource4 = applicationContext.getResource("classpath:Test.txt");
 
     //READ FILE
-    File   file    = resource.getFile();
+    File   file    = resource1.getFile();
     String content = new String(Files.readAllBytes(file.toPath()));
 
     //DISPLAY VALUES
